@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <style>
+    :root {
+      --bg: #0a0e14;
+      --panel: #111722;
+      --edge: #1f2a3a;
+      --fg: #d7e2f0;
+      --muted: #6b7c93;
+      --accent: #36e0a6;
+      --accent-dim: #1c8f68;
+      --bad: #ff5d6c;
+      --mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; background: radial-gradient(1200px 600px at 50% -10%, #16202e 0%, var(--bg) 60%);
+      color: var(--fg); font-family: var(--mono); display: flex; align-items: flex-start;
+      justify-content: center; padding: 48px 16px;
+    }
+    .wrap { width: 100%; max-width: 680px; }
+    .brand { color: var(--muted); letter-spacing: 3px; font-size: 12px; text-transform: uppercase; margin-bottom: 8px; }
+    h1 { margin: 0 0 6px; font-size: 26px; }
+    .intro { color: var(--muted); margin: 0 0 24px; line-height: 1.5; }
+    .progress { display: flex; gap: 6px; margin: 0 0 20px; flex-wrap: wrap; }
+    .dot { width: 26px; height: 6px; border-radius: 3px; background: var(--edge); }
+    .dot.done { background: var(--accent-dim); }
+    .dot.curr { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+    .card {
+      background: var(--panel); border: 1px solid var(--edge); border-radius: 14px;
+      padding: 26px; box-shadow: 0 20px 60px rgba(0,0,0,.45);
+    }
+    .stage-no { color: var(--accent); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
+    .stage-title { font-size: 20px; margin: 6px 0 14px; }
+    .clue { line-height: 1.65; white-space: pre-wrap; word-wrap: break-word; }
+    .clue a { color: var(--accent); }
+    form { margin-top: 22px; display: flex; gap: 10px; }
+    input[type=text] {
+      flex: 1; background: #0b1019; border: 1px solid var(--edge); color: var(--fg);
+      padding: 13px 14px; border-radius: 10px; font-family: var(--mono); font-size: 15px; outline: none;
+    }
+    input[type=text]:focus { border-color: var(--accent-dim); }
+    button {
+      background: var(--accent); color: #05221a; border: 0; padding: 0 20px; border-radius: 10px;
+      font-weight: 700; font-family: var(--mono); cursor: pointer; font-size: 15px;
+    }
+    button:disabled { opacity: .5; cursor: default; }
+    .msg { margin-top: 14px; min-height: 20px; font-size: 14px; }
+    .msg.bad { color: var(--bad); }
+    .msg.busy { color: var(--muted); }
+    .win {
+      border: 1px solid var(--accent-dim); background: rgba(54,224,166,.06);
+      border-radius: 12px; padding: 22px; line-height: 1.6; white-space: pre-wrap;
+    }
+    .win h2 { margin: 0 0 10px; color: var(--accent); }
+    .foot { color: var(--muted); font-size: 11px; margin-top: 22px; text-align: center; line-height: 1.6; }
+    .reset { color: var(--muted); background: none; border: 0; cursor: pointer; text-decoration: underline; padding: 0; font-family: var(--mono); font-size: 11px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">// encrypted quest</div>
+    <h1 id="title">Quest</h1>
+    <p class="intro" id="intro"></p>
+    <div class="progress" id="progress"></div>
+    <div class="card" id="card">
+      <div class="msg busy">Loading…</div>
+    </div>
+    <div class="foot">
+      Все этапы зашифрованы AES-256-GCM. Ключ каждого этапа выводится из ответа предыдущего (PBKDF2-SHA256).
+      Перепрыгнуть нельзя — в исходнике только шифротекст.<br />
+      <button class="reset" id="reset">сбросить прогресс</button>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
